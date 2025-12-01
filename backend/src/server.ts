@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from 'express';
 
 
 const app: Express = express();
-const PORT: number = Number(process.env.BACKEND_PORT) || 9000;
+const PORT: number = Number(process.env.BACKEND_PORT);
 
 if (!PORT) {
     console.error('CRITICAL ERROR: BACKEND_PORT environment variable is not defined.');
