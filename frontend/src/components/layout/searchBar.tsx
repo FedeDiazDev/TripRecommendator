@@ -12,12 +12,6 @@ export default function SearchBar({ onSearch, isSearching, isLoading }: SearchBa
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const mapContainer = document.getElementById("map-container");
-    if (mapContainer) {
-      mapContainer.classList.remove("z-0");
-    }
-
-    console.log("Buscando:", inputValue);
 
     if (inputValue.trim()) {
       onSearch(inputValue);
@@ -36,33 +30,34 @@ export default function SearchBar({ onSearch, isSearching, isLoading }: SearchBa
 
         <form
           onSubmit={handleSearch}
-          className="relative group flex items-center bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-full h-16 w-full hover:border-white/20 transition-all duration-500 shadow-2xl"
+          className="relative group flex items-center bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-full h-14 md:h-16  w-full hover:border-white/20 transition-all duration-500 shadow-2xl"
         >
-          <div className="flex-none w-16 h-16 flex items-center justify-center text-white/50">
-            <Search className="w-5 h-5" />
+          <div className="flex-none w-14 md:w-16 h-full flex items-center justify-center text-white/50">
+            <Search className="w-4 h-4 md:w-5 md:h-5" />
           </div>
 
-          <input
-            type="text"
+          <textarea
+            className="flex-1 bg-transparent border-none outline-none text-white placeholder:text-white/30 text-lg font-light tracking-wide pr-4 pt-5 resize-none overflow-y-auto h-16"
             placeholder="Escribe tu destino..."
-            className="flex-1 bg-transparent border-none outline-none text-white placeholder:text-white/30 text-lg font-light tracking-wide pr-4"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             disabled={isLoading}
           />
+
 
           <div className="flex items-center gap-2 pr-2">
             <button
               type="submit"
               disabled={isLoading || !inputValue}
               className={`
-                  p-3 rounded-full transition-all duration-500 flex items-center justify-center
-                  ${(inputValue && !isLoading) ? 
+                  p-2 md:p-3 rounded-full transition-all duration-500 flex items-center justify-center
+                  ${(inputValue && !isLoading) ?
                   'bg-white text-black rotate-0 opacity-100 hover:scale-105 shadow-[0_0_15px_rgba(255,255,255,0.3)]' :
                   'bg-transparent text-transparent -rotate-90 opacity-0'}
-                `}
+    `}
             >
-              {isLoading ? (               
+
+              {isLoading ? (
                 <span className="animate-spin h-5 w-5 border-2 border-current border-t-transparent rounded-full" />
               ) : (
                 <ArrowRight className="w-5 h-5" />

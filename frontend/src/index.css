@@ -12,6 +12,11 @@ body{
     overflow-y: hidden;
 
 }
+
+body.overflow-y-auto {
+  overflow-y: auto;
+}
+
 #root {
     min-height: 100dvh;
     display: flex;

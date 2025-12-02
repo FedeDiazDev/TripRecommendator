@@ -31,6 +31,10 @@ const recommendationSchema = {
             type: Type.STRING,
             description: "Una breve descripción de 1-2 frases sobre la ciudad y por qué fue seleccionada."
           },
+          notaFinal: {
+            type: Type.NUMBER,
+            description: "Una puntuación del 1 al 10 que indica qué tan bien el destino cumple con la solicitud del usuario."
+          },
         },
         required: ["nombre", "latitud", "longitud", "descripcion"],
       },
