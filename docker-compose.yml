@@ -25,3 +25,4 @@ services:
     environment:
       - NODE_ENV=${NODE_ENV}
       - BACKEND_PORT=${BACKEND_PORT}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
