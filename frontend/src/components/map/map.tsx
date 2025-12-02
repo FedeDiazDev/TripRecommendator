@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import SearchBar from "../layout/searchBar";
 import { generateRecommendations, Recomendacion } from "../../services/AIServices.js";
-import { Menu } from "lucide-react"; 
+import { Menu, Loader2 } from "lucide-react"; // 1. Importamos Loader2
 
 export default function Map() {
 
@@ -29,6 +29,11 @@ export default function Map() {
         setIsLoading(true);
         setError(null);
         setRecommendations(null);
+        
+        // 2. Activamos el modal INMEDIATAMENTE. 
+        // No se verá todavía porque showSearchBar es true, pero en cuanto 
+        // pasen los 700ms y showSearchBar sea false, el modal aparecerá cargando.
+        setShowModal(true);
 
         setTimeout(() => {
             setShowSearchBar(false);
@@ -43,7 +48,7 @@ export default function Map() {
             } else {
                 throw new Error("Formato de respuesta no válido");
             }
-            setShowModal(true); 
+            // setShowModal(true); // <--- Esto ya no es necesario aquí
 
         } catch (err: any) {
             console.error(err);
@@ -96,12 +101,14 @@ export default function Map() {
                     onClick={() => setShowModal(true)}
                     className="absolute top-4 right-4 z-[50] bg-white text-black font-bold rounded-lg px-6 py-3 shadow-xl hover:scale-105 transition flex items-center gap-2"
                 >
-                   <Menu className="w-5 h-5"/> Ver Lista
+                    <Menu className="w-5 h-5" /> Ver Lista
                 </button>
             )}
 
             {!showSearchBar && showModal && (
-                <div className="absolute top-0 right-0 p-8 z-[50] text-white bg-black/80 backdrop-blur-md w-full md:w-1/3 h-full overflow-y-auto transition-transform duration-500">
+                <div className="absolute top-0 right-0 z-[50] text-white bg-black/80 backdrop-blur-md w-full md:w-1/3 h-[100dvh] overflow-y-auto transition-transform duration-500 p-8 pb-32">
+                    
+                    {/* Botón Cerrar */}
                     <button
                         onClick={() => setShowModal(false)}
                         className="absolute top-4 right-4 z-[60] bg-white/10 text-white hover:bg-white/30 rounded-full w-10 h-10 flex items-center justify-center transition"
@@ -109,46 +116,66 @@ export default function Map() {
                         ✕
                     </button>
 
-                    {isLoading && <p className="text-center mt-10">Explorando el mundo...</p>}
-                    {error && <p className="text-red-400 font-bold">Error: {error}</p>}
-
-                    {recommendations && (
-                        <div className="space-y-6 mt-8">
-                            <h2 className="text-3xl font-light mb-6">Destinos Sugeridos</h2>
-                            {recommendations.map((rec: Recomendacion, index: number) => (
-                                <div 
-                                    key={index} 
-                                    className="p-4 border-l-2 border-emerald-400 bg-white/5 hover:bg-white/10 transition rounded-r-lg cursor-pointer" 
-                                    onClick={() => {
-                                        if (mapRef.current) {
-                                            mapRef.current.setView([rec.latitud, rec.longitud], 12, { animate: true });
-                                        }
-                                        setShowModal(false); 
-                                    }} 
-                                >
-                                    <h3 className="text-xl font-bold text-emerald-300">{rec.nombre}</h3>
-                                    {rec.categoria && <p className="text-xs uppercase tracking-widest text-white/60 mb-2">{rec.categoria}</p>}
-                                    <p className="text-white/90 leading-relaxed">{rec.descripcionCorta || rec.descripcion}</p>
-                                    <div className="flex gap-4 mt-3 text-xs text-white/40 font-mono">
-                                        <span>Lat: {rec.latitud.toFixed(2)}</span>
-                                        <span>Lon: {rec.longitud.toFixed(2)}</span>
-                                    </div>
-                                </div>
-                            ))}
+                    {/* 3. LÓGICA DE VISUALIZACIÓN: CARGA vs RESULTADOS */}
+                    {isLoading ? (
+                        <div className="flex flex-col items-center justify-center h-full space-y-6 animate-pulse">
+                            <div className="relative">
+                                {/* Efecto de brillo detrás del spinner */}
+                                <div className="absolute inset-0 bg-emerald-500 blur-xl opacity-20 rounded-full"></div>
+                                <Loader2 className="w-16 h-16 animate-spin text-emerald-400 relative z-10" />
+                            </div>
+                            <div className="text-center space-y-2">
+                                <p className="text-2xl font-light text-white">Explorando el mundo</p>
+                                <p className="text-sm text-white/50">Buscando los mejores destinos para ti...</p>
+                            </div>
                         </div>
-                    )}
+                    ) : (
+                        <>
+                            {error && (
+                                <div className="mt-12 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
+                                    <p className="text-red-200 font-bold text-center">😕 {error}</p>
+                                </div>
+                            )}
 
-                    <button
-                        onClick={() => {
-                            setShowSearchBar(true);
-                            setIsSearching(false);
-                            setRecommendations(null);
-                            setShowModal(false);
-                        }}
-                        className="mt-8 w-full py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition shadow-lg"
-                    >
-                        Nueva Búsqueda
-                    </button>
+                            {recommendations && (
+                                <div className="space-y-6 mt-8">
+                                    <h2 className="text-3xl font-light mb-6">Destinos Sugeridos</h2>
+                                    {recommendations.map((rec: Recomendacion, index: number) => (
+                                        <div
+                                            key={index}
+                                            className="p-4 border-l-2 border-emerald-400 bg-white/5 hover:bg-white/10 transition rounded-r-lg cursor-pointer group"
+                                            onClick={() => {
+                                                if (mapRef.current) {
+                                                    mapRef.current.setView([rec.latitud, rec.longitud], 12, { animate: true });
+                                                }
+                                                setShowModal(false);
+                                            }}
+                                        >
+                                            <h3 className="text-xl font-bold text-emerald-300 group-hover:text-emerald-200 transition">{rec.nombre}</h3>
+                                            {rec.categoria && <p className="text-xs uppercase tracking-widest text-white/60 mb-2">{rec.categoria}</p>}
+                                            <p className="text-white/90 leading-relaxed">{rec.descripcionCorta || rec.descripcion}</p>
+                                            <div className="flex gap-4 mt-3 text-xs text-white/40 font-mono">
+                                                <span>Lat: {rec.latitud.toFixed(2)}</span>
+                                                <span>Lon: {rec.longitud.toFixed(2)}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            <button
+                                onClick={() => {
+                                    setShowSearchBar(true);
+                                    setIsSearching(false);
+                                    setRecommendations(null);
+                                    setShowModal(false);
+                                }}
+                                className="mt-8 mb-10 w-full py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition shadow-lg"
+                            >
+                                Nueva Búsqueda
+                            </button>
+                        </>
+                    )}
                 </div>
             )}
         </div>
