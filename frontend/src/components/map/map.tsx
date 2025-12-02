@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import SearchBar from "../layout/searchBar";
 import { generateRecommendations, Recomendacion } from "../../services/AIServices.js";
-import { Menu, Loader2 } from "lucide-react"; // 1. Importamos Loader2
+import { Menu, Loader2 } from "lucide-react";
 
 export default function Map() {
 
@@ -29,10 +29,7 @@ export default function Map() {
         setIsLoading(true);
         setError(null);
         setRecommendations(null);
-        
-        // 2. Activamos el modal INMEDIATAMENTE. 
-        // No se verá todavía porque showSearchBar es true, pero en cuanto 
-        // pasen los 700ms y showSearchBar sea false, el modal aparecerá cargando.
+
         setShowModal(true);
 
         setTimeout(() => {
@@ -48,7 +45,6 @@ export default function Map() {
             } else {
                 throw new Error("Formato de respuesta no válido");
             }
-            // setShowModal(true); // <--- Esto ya no es necesario aquí
 
         } catch (err: any) {
             console.error(err);
@@ -107,7 +103,7 @@ export default function Map() {
 
             {!showSearchBar && showModal && (
                 <div className="absolute top-0 right-0 z-[50] text-white bg-black/80 backdrop-blur-md w-full md:w-1/3 h-[100dvh] overflow-y-auto transition-transform duration-500 p-8 pb-32">
-                    
+
                     {/* Botón Cerrar */}
                     <button
                         onClick={() => setShowModal(false)}
@@ -115,12 +111,10 @@ export default function Map() {
                     >
                         ✕
                     </button>
-
-                    {/* 3. LÓGICA DE VISUALIZACIÓN: CARGA vs RESULTADOS */}
+                    
                     {isLoading ? (
                         <div className="flex flex-col items-center justify-center h-full space-y-6 animate-pulse">
-                            <div className="relative">
-                                {/* Efecto de brillo detrás del spinner */}
+                            <div className="relative">                                
                                 <div className="absolute inset-0 bg-emerald-500 blur-xl opacity-20 rounded-full"></div>
                                 <Loader2 className="w-16 h-16 animate-spin text-emerald-400 relative z-10" />
                             </div>
