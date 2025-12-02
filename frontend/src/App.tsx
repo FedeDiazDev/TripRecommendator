@@ -1,20 +1,19 @@
-import { useState } from 'react'
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import './App.css'
+import Navbar from './components/layout/navbar'
+import SearchBar from './components/layout/searchBar'
+import Map from './components/map/map'
+import Footer from './components/layout/footer'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <h1>Trip Recommendator</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
+      <Navbar />
+      <main id='map'>
+        <SearchBar />
+        <Map />
+      </main>
+      <Footer />
     </>
   )
 }

@@ -1,5 +1,4 @@
-services:
-  # 1. Frontend Service (React + TypeScript with Vite)
+services:  
   frontend:
     build:
       context: ./frontend
@@ -13,8 +12,7 @@ services:
       - backend
     environment:
       - NODE_ENV=${NODE_ENV}
-    
-  # 2. Backend Service (Node.js/Express)
+      
   backend:
     build:
       context: ./backend
@@ -26,3 +24,4 @@ services:
       - ./backend:/usr/src/app
     environment:
       - NODE_ENV=${NODE_ENV}
+      - BACKEND_PORT=${BACKEND_PORT}
