@@ -1,9 +1,9 @@
-import { Map as LeafletMap } from "leaflet";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import SearchBar from "../layout/searchBar";
-import { generateRecommendations, Recomendacion } from "../../services/AIServices.js";
+import { generateRecommendations } from "../../services/AIServices.js";
 import { Menu, Loader2 } from "lucide-react";
+import { Recomendacion } from "../../types/Recomendacion.js";
+import SearchBar from "../layout/searchBar.js";
 
 export default function Map() {
 
@@ -11,7 +11,6 @@ export default function Map() {
     const [isSearching, setIsSearching] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const mapRef = useRef<LeafletMap | null>(null);
 
     const [recommendations, setRecommendations] = useState<Recomendacion[] | null>(null);
     const [showModal, setShowModal] = useState(false);
@@ -56,9 +55,7 @@ export default function Map() {
         }
     };
 
-    const mapCenter: [number, number] = (recommendations && recommendations.length > 0)
-        ? [recommendations[0].latitud, recommendations[0].longitud]
-        : [40.4168, -3.7038];
+    const mapCenter: [number, number] = [40.4168, -3.7038];
 
     return (
         <div className="relative h-full w-full">
@@ -68,7 +65,6 @@ export default function Map() {
                 scrollWheelZoom={false}
                 className={`h-[100%] w-[100%] transition-all ${showSearchBar ? 'z-0' : 'z-10'}`}
                 id="map-container"
-                ref={mapRef}
             >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
@@ -139,9 +135,6 @@ export default function Map() {
                                             key={index}
                                             className="p-4 border-l-2 border-emerald-400 bg-white/5 hover:bg-white/10 transition rounded-r-lg cursor-pointer group"
                                             onClick={() => {
-                                                if (mapRef.current) {
-                                                    mapRef.current.setView([rec.latitud, rec.longitud], 12, { animate: true });
-                                                }
                                                 setShowModal(false);
                                             }}
                                         >

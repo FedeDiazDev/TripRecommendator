@@ -1,12 +1,4 @@
-export interface Recomendacion  {
-  nombre: string;
-  categoria: string;
-  descripcionCorta: string;
-  descripcion: string;
-  latitud: number;
-  longitud: number;
-  notaFinal?: number;
-}
+import { Recomendacion } from "../types/Recomendacion";
 
 
 export async function generateRecommendations(prompt: string): Promise<Recomendacion []> {
