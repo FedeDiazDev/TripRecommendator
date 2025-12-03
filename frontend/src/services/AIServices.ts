@@ -22,7 +22,7 @@ export async function generateRecommendations(prompt: string): Promise<Recomenda
       throw new Error(result.error || 'Respuesta de la IA vacía o con error.');
     }
 
-    const recommendations: Recomendation [] = result.data;
+    const recommendations: Recomendation[] = result.data.destinos;
 
     
     return recommendations;

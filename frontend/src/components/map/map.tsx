@@ -40,9 +40,7 @@ export default function Map() {
 
         try {
             const result = await generateRecommendations(term);
-            if (result && Array.isArray(result.destinos)) {
-                setRecommendations(result.destinos);
-            } else if (Array.isArray(result)) {
+            if (Array.isArray(result)) {
                 setRecommendations(result);
             } else {
                 throw new Error("Formato de respuesta no válido");
@@ -132,7 +130,7 @@ export default function Map() {
                         <>
                             {error && (
                                 <div className="mt-12 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
-                                    <p className="text-red-200 font-bold text-center">😕 {error}</p>
+                                    <p className="text-red-200 font-bold text-center">{error}</p>
                                 </div>
                             )}
 
@@ -142,7 +140,7 @@ export default function Map() {
                                     {recommendations.map((rec: Recomendation, index: number) => (
                                         <div
                                             key={index}
-                                            className="p-4 border-l-2 border-emerald-400 bg-white/5 hover:bg-white/10 transition rounded-r-lg cursor-pointer group"
+                                            className="p-4 border-l-2 border-emerald-400 bg-white/5 hover:bg-white/10 transition rounded-r-lg"
                                             onClick={() => {
                                                 setShowModal(false);
                                             }}

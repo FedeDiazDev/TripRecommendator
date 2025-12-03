@@ -74,7 +74,7 @@ export default function SearchBar({ onSearch, isSearching, isLoading }: SearchBa
         absolute inset-0 flex flex-col items-center justify-center z-50 bg-base-black1/70 backdrop-blur-sm 
         transition-all duration-700 ease-in-out
         ${isSearching 
-          ? 'opacity-0 pointer-events-none scale-110'
+          ? 'opacity-0 scale-110'
           : 'opacity-100 scale-100'}
       `}
     >
