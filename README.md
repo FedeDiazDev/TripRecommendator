@@ -51,24 +51,8 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 
 ## 🔧 Instalación y Ejecución (Entorno Local)
 
-Si deseas ejecutar el proyecto manualmente sin Docker:
 
-### 1. Configuración del Backend
-```bash
-cd backend
-npm install
-````
-Crea un archivo .env en la carpeta backend con tus credenciales:
-```bash
-PORT=3000
-GEMINI_API_KEY=tu_api_key_aqui
-````
-Ejecuta el servidor en modo desarrollo:
-```bash
-npm run dev
-````
-
-### 2. 🐳 Ejecución con Docker
+###  🐳 Ejecución con Docker
 Para cumplir con los requisitos de entrega, el proyecto está completamente dockerizado.
 
 Asegúrate de estar en la raíz del proyecto (donde está el docker-compose.yml).
