@@ -1,4 +1,4 @@
-export interface Recomendacion  {
+export interface Recomendation  {
   nombre: string;
   categoria: string;
   descripcionCorta: string;

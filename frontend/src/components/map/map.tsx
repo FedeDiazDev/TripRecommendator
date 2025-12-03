@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { generateRecommendations } from "../../services/AIServices.js";
 import { Menu, Loader2 } from "lucide-react";
-import { Recomendacion } from "../../types/Recomendacion.js";
+import { Recomendation } from "../../types/Recomendacion.js";
 import SearchBar from "../layout/searchBar.js";
 
 export default function Map() {
@@ -12,13 +12,16 @@ export default function Map() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const [recommendations, setRecommendations] = useState<Recomendacion[] | null>(null);
+    const [recommendations, setRecommendations] = useState<Recomendation[] | null>(null);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const body = document.body;
-        if (showSearchBar) body.classList.add("overflow-y-hidden");
-        else body.classList.remove("overflow-y-hidden");
+        if (showSearchBar) {
+            body.classList.remove("overflow-y-auto");
+        } else {
+            body.classList.add("overflow-y-auto");
+        }
     }, [showSearchBar]);
 
     const handleSearch = async (term: string) => {
@@ -59,26 +62,32 @@ export default function Map() {
 
     return (
         <div className="relative h-full w-full">
-            <MapContainer
-                center={mapCenter}
-                zoom={recommendations ? 6 : 3}
-                scrollWheelZoom={false}
-                className={`h-[100%] w-[100%] transition-all ${showSearchBar ? 'z-0' : 'z-10'}`}
-                id="map-container"
+            <div 
+                inert={showSearchBar ? true : undefined}
+                aria-hidden={showSearchBar}
+                className="h-full w-full"
             >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <MapContainer
+                    center={mapCenter}
+                    zoom={recommendations ? 6 : 3}
+                    scrollWheelZoom={false}
+                    className={`h-[100%] w-[100%] transition-all ${showSearchBar ? 'z-0' : 'z-10'}`}
+                    id="map-container"
+                >
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-                {recommendations && recommendations.map((rec: Recomendacion, index: number) => (
-                    <Marker key={index} position={[rec.latitud, rec.longitud]}>
-                        <Popup>
-                            <div>
-                                <h3 className="font-bold">{rec.nombre}</h3>
-                                <p>{rec.descripcionCorta || rec.descripcion}</p>
-                            </div>
-                        </Popup>
-                    </Marker>
-                ))}
-            </MapContainer>
+                    {recommendations && recommendations.map((rec: Recomendation, index: number) => (
+                        <Marker key={index} position={[rec.latitud, rec.longitud]}>
+                            <Popup>
+                                <div>
+                                    <h3 className="font-bold">{rec.nombre}</h3>
+                                    <p>{rec.descripcionCorta || rec.descripcion}</p>
+                                </div>
+                            </Popup>
+                        </Marker>
+                    ))}
+                </MapContainer>
+            </div>
 
             {showSearchBar && (
                 <SearchBar
@@ -130,7 +139,7 @@ export default function Map() {
                             {recommendations && (
                                 <div className="space-y-6 mt-8">
                                     <h2 className="text-3xl font-light mb-6">Destinos Sugeridos</h2>
-                                    {recommendations.map((rec: Recomendacion, index: number) => (
+                                    {recommendations.map((rec: Recomendation, index: number) => (
                                         <div
                                             key={index}
                                             className="p-4 border-l-2 border-emerald-400 bg-white/5 hover:bg-white/10 transition rounded-r-lg cursor-pointer group"

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Search, ArrowRight } from 'lucide-react';
 
 interface SearchBarProps {
@@ -9,6 +9,52 @@ interface SearchBarProps {
 
 export default function SearchBar({ onSearch, isSearching, isLoading }: SearchBarProps) {
   const [inputValue, setInputValue] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  
+  useEffect(() => {
+    if (!isSearching && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [isSearching]);
+  
+  useEffect(() => {
+    if (isSearching) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+
+      const container = containerRef.current;
+      if (!container) return;
+
+      const focusableElements = container.querySelectorAll<HTMLElement>(
+        'textarea:not([disabled]), button:not([disabled])'
+      );
+      
+      const focusableArray = Array.from(focusableElements).filter(el => el.tabIndex !== -1);
+      
+      if (focusableArray.length === 0) return;
+
+      const firstElement = focusableArray[0];
+      const lastElement = focusableArray[focusableArray.length - 1];
+
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      }
+      else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+      else if (!container.contains(document.activeElement)) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isSearching]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,13 +65,19 @@ export default function SearchBar({ onSearch, isSearching, isLoading }: SearchBa
   };
 
   return (
-    <div className={`
-      absolute inset-0 flex flex-col items-center justify-center z-50 bg-base-black1/70 backdrop-blur-sm 
-      transition-all duration-700 ease-in-out
-      ${isSearching 
-        ? 'opacity-0 pointer-events-none scale-110'
-        : 'opacity-100 scale-100'}
-    `}>
+    <div 
+      ref={containerRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Barra de búsqueda de destinos"
+      className={`
+        absolute inset-0 flex flex-col items-center justify-center z-50 bg-base-black1/70 backdrop-blur-sm 
+        transition-all duration-700 ease-in-out
+        ${isSearching 
+          ? 'opacity-0 pointer-events-none scale-110'
+          : 'opacity-100 scale-100'}
+      `}
+    >
       <div className="relative w-full max-w-xl px-6 flex flex-col items-center">
         
         <h2 className={`
@@ -49,6 +101,7 @@ export default function SearchBar({ onSearch, isSearching, isLoading }: SearchBa
           </div>
 
           <textarea
+            ref={textareaRef}
             className="flex-1 bg-transparent border-none outline-none text-white placeholder:text-white/30 text-lg font-light tracking-wide pr-4 pt-5 resize-none overflow-y-auto h-16"
             placeholder="Escribe tu destino..."
             value={inputValue}

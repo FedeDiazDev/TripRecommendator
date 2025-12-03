@@ -1,7 +1,7 @@
-import { Recomendacion } from "../types/Recomendacion";
+import { Recomendation } from "../types/Recomendacion";
 
 
-export async function generateRecommendations(prompt: string): Promise<Recomendacion []> {
+export async function generateRecommendations(prompt: string): Promise<Recomendation []> {
   const endpointUrl = 'http://localhost:9000/api/recommendations'; 
   try {
     const response = await fetch(endpointUrl, {
@@ -22,7 +22,7 @@ export async function generateRecommendations(prompt: string): Promise<Recomenda
       throw new Error(result.error || 'Respuesta de la IA vacía o con error.');
     }
 
-    const recommendations: Recomendacion [] = result.data;
+    const recommendations: Recomendation [] = result.data;
 
     
     return recommendations;
