@@ -1,5 +1,18 @@
 # Trip Recommendator 🌍✈️
 
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=white)
+
+<div align="center">
+  <img src="assets/portada.png" alt="Trip Recommendator Hero" width="100%" style="border-radius: 10px; margin-top: 20px; margin-bottom: 20px;" />
+</div>
+
 **Trip Recommendator** es una aplicación web moderna diseñada con un enfoque **Mobile-First** que utiliza **Inteligencia Artificial** para sugerir destinos de viaje basándose en las preferencias del usuario.
 
 El usuario puede describir su viaje ideal en lenguaje natural (ej: "Quiero un lugar con playas tranquilas, buena comida y clima tropical"), y la aplicación, impulsada por la **API de Google Gemini**, procesará la solicitud para mostrar destinos recomendados en un **mapa interactivo**.
@@ -8,13 +21,31 @@ El usuario puede describir su viaje ideal en lenguaje natural (ej: "Quiero un lu
 
 ## 🚀 Características Principales
 
-- **Búsqueda con IA (Free-Text Input):** Procesamiento de lenguaje natural utilizando Google GenAI para interpretar descripciones complejas de viajes.  
-- **Mapa Interactivo:** Visualización de destinos mediante Leaflet y marcadores personalizados.  
-- **Diseño Mobile-First:** Interfaz responsiva y adaptativa, optimizada para dispositivos móviles y de escritorio.  
-- **UI Moderna (Luxury Tech):** Estética elegante con modo oscuro, efectos de vidrio (glassmorphism) y animaciones fluidas.  
+- **Búsqueda con IA (Free-Text Input):** Procesamiento de lenguaje natural utilizando Google GenAI para interpretar descripciones complejas de viajes.
+
+<div align="center">
+  <img src="assets/carga.png" alt="Búsqueda con IA" width="80%" style="border-radius: 8px; margin: 20px 0;" />
+</div>
+
+- **Mapa Interactivo:** Visualización de destinos mediante Leaflet y marcadores personalizados.
+
+<div align="center">
+  <img src="assets/resultado.png" alt="Mapa Interactivo" width="80%" style="border-radius: 8px; margin: 20px 0;" />
+</div>
+
+- **Diseño Mobile-First & UI Moderna:** Interfaz responsiva, estética elegante con modo oscuro y listados detallados.
+
+<div align="center">
+  <img src="assets/listado.png" alt="Diseño Mobile First" width="80%" style="border-radius: 8px; margin: 20px 0;" />
+</div>
+
 - **Arquitectura:** Frontend (Vite + React) y Backend (Express).
 
 ---
+
+
+---
+
 
 ## 🛠️ Stack Tecnológico
 
@@ -45,9 +76,19 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 
 - Node.js (v18 o superior recomendado)  
 - Docker Desktop (Obligatorio para la entrega)  
-- Una API Key de Google Gemini (Google AI Studio)  
+- Una API Key de Google Gemini (Google AI Studio)
+
+### Archivos de Configuración
+
+1.  Crea un archivo `.env` en la raíz del backend (`backend/.env`) **(Solo para ejecución manual sin Docker)**:
+    ```bash
+    PORT=9000
+    GEMINI_API_KEY=tu_api_key_aqui
+    ```
+2.  Para Docker, asegúrate de que las variables de entorno necesarias estén configuradas en `docker-compose.yml` o en un archivo `.env` en la raíz del proyecto si decides externalizarlas.
 
 ---
+
 
 ## 🔧 Instalación y Ejecución (Entorno Local)
 
