@@ -9,9 +9,6 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=white)
 
-<div align="center">
-  <img src="assets/portada.png" alt="Trip Recommendator Hero" width="100%" style="border-radius: 10px; margin-top: 20px; margin-bottom: 20px;" />
-</div>
 
 **Trip Recommendator** es una aplicación web moderna diseñada con un enfoque **Mobile-First** que utiliza **Inteligencia Artificial** para sugerir destinos de viaje basándose en las preferencias del usuario.
 
@@ -21,25 +18,24 @@ El usuario puede describir su viaje ideal en lenguaje natural (ej: "Quiero un lu
 
 ## 🚀 Características Principales
 
-- **Búsqueda con IA (Free-Text Input):** Procesamiento de lenguaje natural utilizando Google GenAI para interpretar descripciones complejas de viajes.
-
-<div align="center">
-  <img src="assets/carga.png" alt="Búsqueda con IA" width="80%" style="border-radius: 8px; margin: 20px 0;" />
-</div>
-
-- **Mapa Interactivo:** Visualización de destinos mediante Leaflet y marcadores personalizados.
-
-<div align="center">
-  <img src="assets/resultado.png" alt="Mapa Interactivo" width="80%" style="border-radius: 8px; margin: 20px 0;" />
-</div>
-
-- **Diseño Mobile-First & UI Moderna:** Interfaz responsiva, estética elegante con modo oscuro y listados detallados.
-
-<div align="center">
-  <img src="assets/listado.png" alt="Diseño Mobile First" width="80%" style="border-radius: 8px; margin: 20px 0;" />
-</div>
-
+- **Búsqueda con IA (Free-Text Input):** Procesamiento de lenguaje natural utilizando Google GenAI para interpretar descripciones complejas de viajes.  
+- **Mapa Interactivo:** Visualización de destinos mediante Leaflet y marcadores personalizados.  
+- **Diseño Mobile-First:** Interfaz responsiva y adaptativa, optimizada para dispositivos móviles y de escritorio.  
+- **UI Moderna (Luxury Tech):** Estética elegante con modo oscuro, efectos de vidrio (glassmorphism) y animaciones fluidas.  
 - **Arquitectura:** Frontend (Vite + React) y Backend (Express).
+
+---
+
+## 📸 Capturas de Pantalla
+
+<div align="center">
+  <img src="assets/portada.png" alt="Portada de la aplicación" width="45%" />
+  <img src="assets/carga.png" alt="Pantalla de carga con IA" width="45%" />
+  <br/>
+  <br/>
+  <img src="assets/resultado.png" alt="Resultados en el mapa" width="45%" />
+  <img src="assets/listado.png" alt="Listado de destinos" width="45%" />
+</div>
 
 ---
 
